@@ -308,7 +308,7 @@ func TestAWSZones(t *testing.T) {
 		{"tag filter", provider.NewZoneIDFilter([]string{}), provider.NewZoneTypeFilter(""), provider.NewZoneTagFilter([]string{"zone=3"}), defaultDomainFilters, privateZones},
 		{"domain filter zone-1", provider.NewZoneIDFilter([]string{}), provider.NewZoneTypeFilter(""), provider.NewZoneTagFilter([]string{}), endpoint.NewDomainFilter([]string{"zone-1.ext-dns-test-2.teapot.zalan.do"}), map[string]*route53.HostedZone{"/hostedzone/zone-1.ext-dns-test-2.teapot.zalan.do.": allZones["/hostedzone/zone-1.ext-dns-test-2.teapot.zalan.do."]}},
 	} {
-		provider, _ := newAWSProviderWithTagFilter(t, endpoint.NewDomainFilter([]string{"ext-dns-test-2.teapot.zalan.do."}), ti.zoneIDFilter, ti.zoneTypeFilter, ti.zoneTagFilter, defaultEvaluateTargetHealth, false, nil)
+		provider, _ := newAWSProviderWithTagFilter(t, ti.domainFilters, ti.zoneIDFilter, ti.zoneTypeFilter, ti.zoneTagFilter, defaultEvaluateTargetHealth, false, nil)
 
 		zones, err := provider.Zones(context.Background())
 		require.NoError(t, err)
